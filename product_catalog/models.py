@@ -2,7 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Product(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(
         blank=False,
         null=False,
@@ -14,6 +13,9 @@ class Product(models.Model):
         MinValueValidator(0.0), MaxValueValidator(5.0)
     ])
     updated_at = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Product'
