@@ -10,8 +10,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = (filters.OrderingFilter,)
-    ordering_fields = ['name', 'price', 'rating', 'updated_at']
-    ordering = ['rating']
+    ordering_fields = ['name', 'price', 'average_rating', 'updated_at']
+    ordering = ['average_rating']
 
 
 class RatingViewSet(viewsets.ModelViewSet):
@@ -21,7 +21,7 @@ class RatingViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         rating = {
-            'rating': request.data.get('rating'),
+            'value': request.data.get('value'),
             'user': self.request.user.id,
             'product': request.data.get('product')
         }

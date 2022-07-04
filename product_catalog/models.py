@@ -11,7 +11,7 @@ class Product(models.Model):
         max_length=255
     )
     price = models.FloatField(blank=False, null=False)
-    rating = models.FloatField(blank=False, null=False, validators=[
+    average_rating = models.FloatField(blank=True, null=True, validators=[
         MinValueValidator(0.0), MaxValueValidator(5.0)
     ])
     updated_at = models.DateField(auto_now=True)
@@ -25,7 +25,7 @@ class Product(models.Model):
 
 
 class Rating(models.Model):
-    rating = models.FloatField(
+    value = models.FloatField(
         blank=False,
         null=False,
         validators=[
@@ -46,7 +46,7 @@ class Rating(models.Model):
     )
 
     def __str__(self):
-        return str(self.rating)
+        return str(self.value)
 
     class Meta:
         verbose_name = 'Rating'
