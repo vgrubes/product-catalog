@@ -1,8 +1,15 @@
+from django_elasticsearch_dsl_drf.filter_backends import \
+    FilteringFilterBackend, IdsFilterBackend, OrderingFilterBackend, \
+    DefaultOrderingFilterBackend, SearchFilterBackend
+from django_elasticsearch_dsl_drf.pagination import PageNumberPagination
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from rest_framework import viewsets, permissions, status, filters
 from rest_framework.response import Response
 
+from product_catalog.documents import ProductDocument
 from product_catalog.models import Product, Rating
-from product_catalog.serializers import ProductSerializer, RatingSerializer
+from product_catalog.serializers import ProductSerializer, RatingSerializer, \
+    ProductDocumentSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -35,3 +42,22 @@ class RatingViewSet(viewsets.ModelViewSet):
             status=status.HTTP_201_CREATED,
             headers=headers
         )
+
+
+class ProductDocumentViewSet(DocumentViewSet):
+
+    document = ProductDocument
+    serializer_class = ProductDocumentSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = [
+        FilteringFilterBackend,
+        IdsFilterBackend,
+        OrderingFilterBackend,
+        DefaultOrderingFilterBackend,
+        SearchFilterBackend,
+    ]
+    search_fields = ('name',)
+    filter_fields = {
+        'name': 'name.raw'
+    }
+    ordering_fields = {'name': 'name.raw'}

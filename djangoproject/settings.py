@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
     'product_catalog'
 ]
 
@@ -135,3 +137,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'es'
+    },
+}
+
+ELASTICSEARCH_INDEX_NAMES = {
+    'product_catalog.products': 'products',
+}

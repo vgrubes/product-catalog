@@ -20,10 +20,12 @@ from rest_framework.schemas import get_schema_view
 from rest_framework.renderers import JSONOpenAPIRenderer
 
 from product_catalog import views
+from product_catalog.views import ProductDocumentViewSet
 
 router = routers.DefaultRouter()
 router.register(r'products', views.ProductViewSet)
 router.register(r'ratings', views.RatingViewSet)
+router.register(r'search/products', ProductDocumentViewSet, basename="search")
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework import serializers
 
+from product_catalog.documents import ProductDocument
 from product_catalog.models import Product, Rating
 
 
@@ -26,3 +28,10 @@ class RatingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Rating
         fields = ['id', 'value', 'product', 'user']
+
+
+class ProductDocumentSerializer(DocumentSerializer):
+
+    class Meta:
+        document = ProductDocument
+        fields = ('name',)
