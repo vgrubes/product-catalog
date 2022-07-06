@@ -9,7 +9,7 @@ from product_catalog.models import Rating, Product
 def update_average_product_rating(sender, instance, created, **kwargs):
     ratings = Rating.objects.filter(product=instance.product)
     rating_values = list(map(lambda rating: rating.value, ratings))
-    average_rating = sum(rating_values)/len(rating_values)
+    average_rating = (sum(rating_values))/(len(rating_values))
 
     instance.product.average_rating = average_rating
     instance.product.save()
